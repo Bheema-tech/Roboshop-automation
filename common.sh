@@ -41,16 +41,16 @@ app_setup(){
     cd /app
     rm -rf /app *
     id roboshop
-    if [$? -ne 0]
+    if [ $? -ne 0 ]
     then
         useradd --system --home /app --shell /sbin/nolgin --comment "roboshop project purpose" roboshop
         VALIDATE $? "Creating roboshop system user"
     else
         echo -e "Roboshop user id already created:$Y skipping it $N"
     fi
-    curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &>>$LOG_FILE 
-    unzip /tmp/catalogue.zip
-    VALIDATE $? "Unzipping the catalogue files"
+    curl -o /tmp/$app_name.zip https://roboshop-artifacts.s3.amazonaws.com/$app_name-v3.zip &>>$LOG_FILE 
+    unzip /tmp/$app_name.zip
+    VALIDATE $? "Unzipping the $app_name files"
     npm install &>>$LOG_FILE 
     VALIDATE $? "Dependcies installation"
 }
@@ -65,12 +65,12 @@ nodejs_setup(){
 }
 
 systemd_setup(){
-    cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service
-    VALIDATE $? "Copying catalogue service"
+    cp $SCRIPT_DIR/$app_name.service /etc/systemd/system/$app_name.service
+    VALIDATE $? "Copying $app_name service"
     systemctl daemon-reload &>>$LOG_FILE 
-    systemctl enable catalogue &>>$LOG_FILE 
-    systemctl start catalogue &>>$LOG_FILE 
-    VALIDATE $? "Starting Catalogue"
+    systemctl enable $app_name &>>$LOG_FILE 
+    systemctl start $app_name &>>$LOG_FILE 
+    VALIDATE $? "Starting $app_name"
 
 }
 
