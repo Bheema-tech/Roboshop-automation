@@ -16,7 +16,7 @@ echo "Script exeuction Start time: $START_TIME"
 mkdir -p $LOGS_FOLDER
 check_root(){
     if [ $USERID -ne 0 ]
-       then
+    then
        echo -e "ERROR $R Please run the script with Root access$N" | tee -a $LOG_FILE
        exit 1
     else
@@ -26,11 +26,11 @@ check_root(){
 
 VALIDATE(){
     if [ $1 -eq 0 ]
-       then
+    then
             echo -e "$2 is ... $G SUCCESS $N" | tee -a $LOG_FILE
-        else
+    else
             echo -e "$2 is ----$R Failure $N" | tee -a $LOG_FILE
-        exit 1
+            exit 1
     f1
 }
 
