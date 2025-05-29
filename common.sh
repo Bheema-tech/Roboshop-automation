@@ -20,7 +20,7 @@ check_root(){
         echo -e "ERROR $R Please run the script with Root access$N" | tee -a $LOG_FILE
         exit 1
     else
-        echo "%G Scriping is running with Root Access"
+        echo "$G Scriping is running with Root Access"
     fi
 }
 
