@@ -1,5 +1,6 @@
 #!/bin/bash
 source ./common.sh
+app_name=mongodb
 
 # common script exeucte only variables and it cannot exeute other conditions and fucntions, we need to call here
 check_root  #Access validation
