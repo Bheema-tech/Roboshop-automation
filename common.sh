@@ -38,16 +38,16 @@ VALIDATE(){
 app_setup(){
     mkdir -p /app
     VALIDATE $? "creaing direcgtory"
-    cd /app
-    rm -rf /app *
     id roboshop
     if [ $? -ne 0 ]
     then
-        useradd --system --home /app --shell /sbin/nolgin --comment "roboshop project purpose" roboshop
+        useradd --system --home /app --shell /sbin/nologin --comment "roboshop project purpose" roboshop
         VALIDATE $? "Creating roboshop system user"
     else
         echo -e "Roboshop user id already created:$Y skipping it $N"
     fi
+    cd /app
+    rm -rf /app/*
     curl -o /tmp/$app_name.zip https://roboshop-artifacts.s3.amazonaws.com/$app_name-v3.zip &>>$LOG_FILE 
     unzip /tmp/$app_name.zip
     VALIDATE $? "Unzipping the $app_name files"
