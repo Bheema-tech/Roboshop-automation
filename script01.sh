@@ -1,7 +1,7 @@
 #!/bin/bash
 
 GREETING="Hello World Good morning"
-echo "GREETING$"
+echo "$GREETING"
 echo "PID of Script1: $$"
 
 source ./script02.sh
