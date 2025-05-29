@@ -20,7 +20,7 @@ check_root(){
         echo -e "ERROR $R Please run the script with Root access$N" | tee -a $LOG_FILE
         exit 1
     else
-        echo -e "$G Scriping is running with Root Access $N"
+        echo -e "Scriping is running with Root Access"
     fi
 }
 
@@ -36,5 +36,5 @@ VALIDATE(){
 print_time(){
     END_TIME=$(date +%s)
     TOTAL_TIME=$(($END_TIME-$START_TIME))
-    echo -e "$G Total time taken for scription Exeuction: tame taken in seconds$N:$TOTAL_TIME"
+    echo -e "$R Total time taken for scription Exeuction:$Y tame taken in seconds$N:$TOTAL_TIME"
 }
