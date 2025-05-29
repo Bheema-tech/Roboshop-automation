@@ -34,6 +34,46 @@ VALIDATE(){
         exit 1
     fi
 }
+
+app_setup(){
+    mkdir -p /app
+    VALIDATE $? "creaing direcgtory"
+    cd /app
+    rm -rf /app *
+    id roboshop
+    if [$? -ne 0]
+    then
+        useradd --system --home /app --shell /sbin/nolgin --comment "roboshop project purpose" roboshop
+        VALIDATE $? "Creating roboshop system user"
+    else
+        echo -e "Roboshop user id already created:$Y skipping it $N"
+    fi
+    curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &>>$LOG_FILE 
+    unzip /tmp/catalogue.zip
+    VALIDATE $? "Unzipping the catalogue files"
+    npm install &>>$LOG_FILE 
+    VALIDATE $? "Dependcies installation"
+}
+
+nodejs_setup(){
+    dnf module disable nodejs -y &>>$LOG_FILE 
+    VALIDATE $? "Disabling default nodejs"
+    dnf module enable nodejs:20 -y &>>$LOG_FILE 
+    VALIDATE $? "enabling nodejs20"
+    dnf install nodejs -y &>>$LOG_FILE 
+    VALIDATE $? "Installing nodejs"
+}
+
+systemd_setup(){
+    cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service
+    VALIDATE $? "Copying catalogue service"
+    systemctl daemon-reload &>>$LOG_FILE 
+    systemctl enable catalogue &>>$LOG_FILE 
+    systemctl start catalogue &>>$LOG_FILE 
+    VALIDATE $? "Starting Catalogue"
+
+}
+
 print_time(){
     END_TIME=$(date +%s)
     TOTAL_TIME=$(($END_TIME-$START_TIME))
