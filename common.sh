@@ -15,7 +15,7 @@ echo "Script exeuction Start time: $START_TIME"
 # &>> to append the end of the file
 mkdir -p $LOGS_FOLDER
 check_root(){
-    if [ $USERID -ne 0 ]
+    if [ $USERD -ne 0 ]
     then
         echo -e "ERROR $R Please run the script with Root access$N" | tee -a $LOG_FILE
         exit 1
